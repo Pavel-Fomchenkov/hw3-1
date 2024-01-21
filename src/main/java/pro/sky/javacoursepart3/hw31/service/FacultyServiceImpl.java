@@ -50,6 +50,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Faculty edit(Long id, Faculty faculty) {
         if (faculties.containsKey(id)) {
+            faculty.setId(id);
             faculties.put(id, faculty);
             return faculties.get(id);
         }

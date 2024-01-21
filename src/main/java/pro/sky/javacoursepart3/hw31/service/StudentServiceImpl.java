@@ -49,6 +49,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student edit(Long id, Student student) {
         if (students.containsKey(id)) {
+            student.setId(id);
             students.put(id, student);
             return students.get(id);
         }

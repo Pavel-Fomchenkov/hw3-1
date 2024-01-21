@@ -57,6 +57,7 @@ class FacultyServiceImplTest {
         out.edit(4L, modified);
         assertTrue(out.getAll().contains(modified)
                 && !out.getAll().contains(new Faculty("faculty3", "color3")));
+        assertEquals(out.find(4L), modified);
     }
 
     @Test

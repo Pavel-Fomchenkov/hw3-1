@@ -57,6 +57,7 @@ class StudentServiceImplTest {
         out.edit(4L, modified);
         assertTrue(out.getAll().contains(modified)
                 && !out.getAll().contains(new Student("Student3", 42)));
+        assertEquals(out.find(4L), modified);
     }
 
     @Test
