@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.javacoursepart3.hw31.model.Faculty;
 import pro.sky.javacoursepart3.hw31.repository.FacultyRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +30,12 @@ public class FacultyServiceImpl implements FacultyService {
 //    }
 
     @Override
-    public List<Faculty> getAll() {
+    public Collection<Faculty> getAll() {
         return facultyRepository.findAll();
     }
 
     @Override
-    public List<Faculty> getFacultyByColor(String color) {
+    public Collection<Faculty> getFacultyByColor(String color) {
         return facultyRepository.findByColor(color);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.service.StudentService;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("student")
@@ -22,12 +22,23 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents(@RequestParam(required = false) Integer age) {
-        if (age == null) {
-            return studentService.getAll();
+    public ResponseEntity<Collection<Student>> getStudents(@RequestParam(required = false) Integer age,
+                                                           @RequestParam(required = false) Integer fromAge,
+                                                           @RequestParam(required = false) Integer toAge) {
+        Collection<Student> st;
+        if (age == null && fromAge == null && toAge == null) {
+            st = studentService.getAll();
+        } else if (age != null) {
+            st = studentService.getStudentsByAge(age);
+        } else {
+            st = studentService.getStudentsBetweenAge(fromAge, toAge);
         }
-        return studentService.getStudentsByAge(age);
+        if (st == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(st);
     }
+
 
     @GetMapping("{id}")
     public ResponseEntity<Student> find(@PathVariable("id") Long id) {

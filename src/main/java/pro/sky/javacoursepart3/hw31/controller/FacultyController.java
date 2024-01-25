@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.javacoursepart3.hw31.model.Faculty;
 import pro.sky.javacoursepart3.hw31.service.FacultyService;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("faculty")
@@ -17,7 +17,7 @@ public class FacultyController {
     }
 
     @GetMapping
-    public List<Faculty> getFaculties(@RequestParam(required = false) String color) {
+    public Collection<Faculty> getFaculties(@RequestParam(required = false) String color) {
         if (color == null) {
             return facultyService.getAll();
         }

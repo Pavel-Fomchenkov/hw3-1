@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.repository.StudentRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
 
 @Service
@@ -29,12 +27,19 @@ public class StudentServiceImpl implements StudentService {
 //    }
 
     @Override
-    public List<Student> getAll() {
+    public Collection<Student> getAll() {
         return studentRepository.findAll();
     }
 
-    public List<Student> getStudentsByAge(int age) {
+    public Collection<Student> getStudentsByAge(Integer age) {
         return studentRepository.findByAge(age);
+    }
+
+    @Override
+    public Collection<Student> getStudentsBetweenAge(Integer fromAge, Integer toAge) {
+        if (fromAge == null) fromAge = Integer.MIN_VALUE;
+        if (toAge == null) toAge = Integer.MAX_VALUE;
+        return studentRepository.findByAgeBetween(fromAge, toAge);
     }
 
     @Override
