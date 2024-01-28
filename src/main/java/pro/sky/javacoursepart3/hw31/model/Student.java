@@ -1,11 +1,22 @@
 package pro.sky.javacoursepart3.hw31.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity(name = "students")
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private int age;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+    public Student() {
+
+    }
 
     public Student(String name, int age) {
         this.name = name;

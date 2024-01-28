@@ -1,11 +1,26 @@
 package pro.sky.javacoursepart3.hw31.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.Collection;
 import java.util.Objects;
 
+@Entity(name = "faculties")
 public class Faculty {
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String color;
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Student> students;
+
+    public Faculty() {
+
+    }
 
     public Faculty(String name, String color) {
         this.name = name;

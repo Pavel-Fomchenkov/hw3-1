@@ -2,12 +2,13 @@ package pro.sky.javacoursepart3.hw31.service;
 
 import pro.sky.javacoursepart3.hw31.model.Faculty;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface FacultyService {
-    List<Faculty> getAll();
+    Collection<Faculty> getAll();
 
-    List<Faculty> getFacultyByColor(String color);
+    Collection<Faculty> getFacultyByColor(String color);
 
     Faculty add(Faculty faculty);
 
@@ -15,6 +16,6 @@ public interface FacultyService {
 
     Faculty edit(Long id, Faculty faculty);
 
-    Faculty delete(Long id);
+    void delete(Long id);
 }
 

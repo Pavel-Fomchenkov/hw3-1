@@ -2,13 +2,16 @@ package pro.sky.javacoursepart3.hw31.service;
 
 import pro.sky.javacoursepart3.hw31.model.Student;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface StudentService {
 
-    List<Student> getAll();
+    Collection<Student> getAll();
 
-    List<Student> getStudentsByAge(int age);
+    Collection<Student> getStudentsByAge(Integer age);
+
+    Collection<Student> getStudentsBetweenAge(Integer fromAge, Integer taAge);
 
     Student add(Student student);
 
@@ -16,6 +19,6 @@ public interface StudentService {
 
     Student edit(Long id, Student student);
 
-    Student delete(Long id);
+    void delete(Long id);
 
 }
