@@ -1,14 +1,16 @@
 package pro.sky.javacoursepart3.hw31.service;
 
 import pro.sky.javacoursepart3.hw31.model.Faculty;
+import pro.sky.javacoursepart3.hw31.model.Student;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface FacultyService {
     Collection<Faculty> getAll();
 
-    Collection<Faculty> getFacultyByColor(String color);
+    Collection<Faculty> getFacultyByNameOrColor(String name, String color);
+
+    Collection<Student> getStudents(Long id);
 
     Faculty add(Faculty faculty);
 

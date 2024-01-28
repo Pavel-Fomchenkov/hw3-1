@@ -2,6 +2,7 @@ package pro.sky.javacoursepart3.hw31.service;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import pro.sky.javacoursepart3.hw31.model.Faculty;
 import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.repository.StudentRepository;
 
@@ -16,7 +17,7 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-//    If spring.jpa.hibernate.ddl-auto= update, this method will add redundant entries to myDb
+//    If spring.jpa.hibernate.ddl-auto= update, this method will add redundant entries to hogwarts Db
 //    @PostConstruct
 //    public void init() {
 //        add(new Student("Гарри Поттер", 12));
@@ -49,12 +50,25 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student find(Long id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
+    }
+
+    public Faculty getFaculty(Long id) {
+        return studentRepository.findById(id)
+                .map(Student::getFaculty)
+                .orElse(null);
     }
 
     @Override
     public Student edit(Long id, Student student) {
-        return studentRepository.save(student);
+        Student st = studentRepository.findById(id).orElse(null);
+        if (st == null || student == null) {
+            return null;
+        } else {
+            st.setName(student.getName());
+            st.setAge(student.getAge());
+            return st;
+        }
     }
 
     @Override

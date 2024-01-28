@@ -2,6 +2,7 @@ package pro.sky.javacoursepart3.hw31.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pro.sky.javacoursepart3.hw31.model.Faculty;
 import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.service.StudentService;
 
@@ -39,7 +40,6 @@ public class StudentController {
         return ResponseEntity.ok(st);
     }
 
-
     @GetMapping("{id}")
     public ResponseEntity<Student> find(@PathVariable("id") Long id) {
         Student student = studentService.find(id);
@@ -48,6 +48,12 @@ public class StudentController {
         }
         return ResponseEntity.ok(student);
     }
+
+    @GetMapping("{id}/faculty")
+    public Faculty findFaculty(@PathVariable("id") Long id) {
+        return studentService.getFaculty(id);
+    }
+
 
     @PutMapping("{id}")
     public ResponseEntity<Student> edit(@PathVariable Long id, @RequestBody Student student) {
