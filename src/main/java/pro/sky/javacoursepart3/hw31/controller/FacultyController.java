@@ -3,6 +3,7 @@ package pro.sky.javacoursepart3.hw31.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.javacoursepart3.hw31.model.Faculty;
+import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.service.FacultyService;
 
 import java.util.Collection;
@@ -17,11 +18,11 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Collection<Faculty> getFaculties(@RequestParam(required = false) String color) {
-        if (color == null) {
+    public Collection<Faculty> getFaculties(@RequestParam(required = false) String name, @RequestParam(required = false) String color) {
+        if (name == null && color == null) {
             return facultyService.getAll();
         }
-        return facultyService.getFacultyByColor(color);
+        return facultyService.getFacultyByNameOrColor(name, color);
     }
 
     @PostMapping
@@ -36,6 +37,11 @@ public class FacultyController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
+    }
+
+    @GetMapping("{id}/students")
+    Collection<Student> findStudents(@PathVariable("id") Long id) {
+        return facultyService.getStudents(id);
     }
 
     @PutMapping("{id}")
