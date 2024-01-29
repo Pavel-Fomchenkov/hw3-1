@@ -61,14 +61,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student edit(Long id, Student student) {
-        Student st = studentRepository.findById(id).orElse(null);
-        if (st == null || student == null) {
-            return null;
-        } else {
-            st.setName(student.getName());
-            st.setAge(student.getAge());
-            return st;
-        }
+        return studentRepository.findById(id)
+                .map(found -> {
+                    found.setName(student.getName());
+                    found.setAge(student.getAge());
+                    return studentRepository.save(found);
+                })
+                .orElse(null);
     }
 
     @Override

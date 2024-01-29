@@ -54,14 +54,14 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty edit(Long id, Faculty faculty) {
-        Faculty fc = facultyRepository.findById(id).orElse(null);
-        if (fc == null || faculty == null) {
-            return null;
-        } else {
-            fc.setName(faculty.getName());
-            fc.setColor(faculty.getColor());
-            return fc;
-        }
+        return facultyRepository.findById(id)
+                .map(found -> {
+                    found.setName(faculty.getName());
+                    found.setColor(faculty.getColor());
+                    facultyRepository.save(found);
+                    return found;
+                })
+                .orElse(null);
     }
 
     @Override
