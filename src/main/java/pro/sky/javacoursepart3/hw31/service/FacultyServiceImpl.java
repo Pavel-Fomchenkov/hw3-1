@@ -58,8 +58,7 @@ public class FacultyServiceImpl implements FacultyService {
                 .map(found -> {
                     found.setName(faculty.getName());
                     found.setColor(faculty.getColor());
-                    facultyRepository.save(found);
-                    return found;
+                    return facultyRepository.save(found);
                 })
                 .orElse(null);
     }
