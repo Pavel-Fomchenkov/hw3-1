@@ -69,7 +69,7 @@ public class AvatarServiceImpl implements AvatarService {
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            BufferedImage image = ImageIO.read(is);
+            BufferedImage image = ImageIO.read(bis);
             int height = image.getHeight() / (image.getWidth() / 100);
             BufferedImage avatarSmall = new BufferedImage(100, height, image.getType());
             Graphics2D g2 = avatarSmall.createGraphics();
