@@ -3,13 +3,11 @@ package pro.sky.javacoursepart3.hw31.model;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Value;
 
-@Entity
+@Entity(name = "avatars")
 public class Avatar {
     @Id
     @GeneratedValue
     private Long id;
-    @Value("${avatars.dir.path}")
-    private String avatarsDir;
     private String filePath;
     private long fileSize;
     private String mediaType;
@@ -24,14 +22,6 @@ public class Avatar {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getAvatarsDir() {
-        return avatarsDir;
-    }
-
-    public void setAvatarsDir(String avatarsDir) {
-        this.avatarsDir = avatarsDir;
     }
 
     public String getFilePath() {
