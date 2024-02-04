@@ -1,7 +1,6 @@
 package pro.sky.javacoursepart3.hw31.model;
 
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Value;
 
 @Entity(name = "avatars")
 public class Avatar {
@@ -15,6 +14,19 @@ public class Avatar {
     private byte[] data;
     @OneToOne
     private Student student;
+
+    public Avatar() {
+
+    }
+
+    public Avatar(Long id, String filePath, long fileSize, String mediaType, byte[] data, Student student) {
+        this.id = id;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.mediaType = mediaType;
+        this.data = data;
+        this.student = student;
+    }
 
     public Long getId() {
         return id;

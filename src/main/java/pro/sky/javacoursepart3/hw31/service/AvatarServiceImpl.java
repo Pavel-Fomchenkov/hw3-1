@@ -62,7 +62,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findAvatarByStudentId(studentId);
+        return avatarRepository.findByStudentId(studentId);
     }
 
     private byte[] generateAvatarSmall(Path filePath) throws IOException {
