@@ -50,11 +50,15 @@ public class FacultyController {
         if (fc == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(fc);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Long id) {
-        facultyService.delete(id);
+    public ResponseEntity<Faculty> delete(@PathVariable("id") Long id) {
+        Faculty fc = facultyService.delete(id);
+        if (fc == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(fc);
     }
 }
