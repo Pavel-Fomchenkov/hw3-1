@@ -1,10 +1,7 @@
 package pro.sky.javacoursepart3.hw31.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +15,7 @@ public class Faculty {
     private String name;
     private String color;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, orphanRemoval = false)
     @JsonIgnore
     private List<Student> students;
 
@@ -31,7 +28,7 @@ public class Faculty {
         this.color = color;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

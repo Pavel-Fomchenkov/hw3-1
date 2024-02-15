@@ -18,6 +18,6 @@ public interface FacultyService {
 
     Faculty edit(Long id, Faculty faculty);
 
-    void delete(Long id);
+    Faculty delete(Long id);
 }
 
