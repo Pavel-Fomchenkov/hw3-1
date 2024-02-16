@@ -2,6 +2,7 @@ package pro.sky.javacoursepart3.hw31.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pro.sky.javacoursepart3.hw31.model.Avatar;
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -78,5 +80,11 @@ public class AvatarServiceImpl implements AvatarService {
             ImageIO.write(avatarSmall, getExtensions(filePath.getFileName().toString()), baos);
             return baos.toByteArray();
         }
+    }
+
+    @Override
+    public List<Avatar> getAvatars(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }

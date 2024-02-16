@@ -23,4 +23,10 @@ public interface StudentService {
 
     Student delete(Long id);
 
+    Long getStudentsQuantity();
+
+    Integer getAverageAge();
+
+    Collection<Student> getLast5();
+
 }
