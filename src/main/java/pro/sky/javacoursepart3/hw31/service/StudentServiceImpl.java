@@ -76,4 +76,19 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
         return studentToDelete;
     }
+
+    @Override
+    public Long getStudentsQuantity() {
+        return studentRepository.getStudentsQuantity();
+    }
+
+    @Override
+    public Integer getAverageAge() {
+        return studentRepository.getAverageAge();
+    }
+
+    @Override
+    public Collection<Student> getLast5() {
+        return studentRepository.getLast5();
+    }
 }
