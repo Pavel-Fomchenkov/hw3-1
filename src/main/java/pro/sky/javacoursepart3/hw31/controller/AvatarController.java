@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pro.sky.javacoursepart3.hw31.dto.AvatarDTO;
+import pro.sky.javacoursepart3.hw31.mapper.AvatarMapper;
 import pro.sky.javacoursepart3.hw31.model.Avatar;
 import pro.sky.javacoursepart3.hw31.service.AvatarService;
 
@@ -15,16 +17,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
 @RequestMapping("avatar")
 public class AvatarController {
     private final AvatarService avatarService;
+    private final AvatarMapper avatarMapper;
 
-    public AvatarController(AvatarService avatarService) {
+    public AvatarController(AvatarService avatarService, AvatarMapper avatarMapper) {
         this.avatarService = avatarService;
+        this.avatarMapper = avatarMapper;
     }
 
     @PostMapping(value = "{studentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -62,10 +65,11 @@ public class AvatarController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Avatar>> getAvatars(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public ResponseEntity<List<AvatarDTO>> getAvatars(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         page = page == null ? 1 : page;
         size = size == null || size > 5 ? 5 : size;
-        List<Avatar> avatars = avatarService.getAvatars(page, size);
-        return ResponseEntity.status(HttpStatus.OK).body(avatars);
+        List<AvatarDTO> DtoAvatars = avatarService.getAvatars(page, size).stream()
+                .map(avatarMapper::mapToDto).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(DtoAvatars);
     }
 }
