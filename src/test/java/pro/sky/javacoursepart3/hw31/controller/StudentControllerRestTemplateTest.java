@@ -18,7 +18,6 @@ import java.util.Collection;
 class StudentControllerRestTemplateTest {
     @LocalServerPort
     private int port;
-
     @Autowired
     private TestRestTemplate testRestTemplate;
     private Long studentId = 0L;
