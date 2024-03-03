@@ -19,4 +19,9 @@ public class InfoController {
     public ResponseEntity<Integer> getPort() {
         return ResponseEntity.ok(infoService.getPort());
     }
+
+    @GetMapping("sequenceSum")
+    public ResponseEntity<Long> getSequenceSum() {
+        return ResponseEntity.ok(infoService.getSumOfSequence());
+    }
 }

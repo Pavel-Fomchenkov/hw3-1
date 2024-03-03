@@ -9,6 +9,8 @@ import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -107,5 +109,23 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> getLast5() {
         logger.info("Was invoked method StudentService.getLast5()");
         return studentRepository.getLast5();
+    }
+
+    @Override
+    public List<String> getA() {
+       return studentRepository.findAll()
+               .parallelStream()
+               .map(s -> s.getName().toUpperCase())
+               .sorted()
+               .filter(s-> s.startsWith("А") || s.startsWith("A")) // Latin or Cyrillic A
+               .collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getAverageAgeDouble() {
+        return studentRepository.findAll()
+                .parallelStream()
+                .mapToInt(s -> s.getAge())
+                .average().orElse(0.0);
     }
 }

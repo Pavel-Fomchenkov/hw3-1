@@ -9,6 +9,8 @@ import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -82,5 +84,13 @@ public class FacultyServiceImpl implements FacultyService {
         Faculty facultyToDelete = facultyRepository.findById(id).orElse(null);
         facultyRepository.deleteById(id);
         return facultyToDelete;
+    }
+
+    @Override
+    public String getLongestFacultyName() {
+        return facultyRepository.findAll().parallelStream()
+                .map(f -> f.getName())
+                .max(Comparator.comparingInt(String::length))
+                .orElse("не найдено");
     }
 }
