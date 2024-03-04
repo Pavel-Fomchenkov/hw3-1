@@ -19,5 +19,7 @@ public interface FacultyService {
     Faculty edit(Long id, Faculty faculty);
 
     Faculty delete(Long id);
+
+    String getLongestFacultyName();
 }
 

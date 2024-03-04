@@ -7,6 +7,7 @@ import pro.sky.javacoursepart3.hw31.model.Student;
 import pro.sky.javacoursepart3.hw31.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -90,5 +91,19 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(st);
+    }
+
+    @GetMapping("letterA")
+    ResponseEntity<List<String>> getAStudents() {
+        List<String> names = studentService.getA();
+        if (names.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(names);
+    }
+
+    @GetMapping("averageAgeDouble")
+    ResponseEntity<Double> getAverageAgeAsDouble() {
+        return ResponseEntity.ok(studentService.getAverageAgeDouble());
     }
 }
