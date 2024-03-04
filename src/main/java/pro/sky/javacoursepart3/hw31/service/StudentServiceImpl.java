@@ -10,6 +10,7 @@ import pro.sky.javacoursepart3.hw31.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private int counter = 0;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -113,12 +115,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<String> getA() {
-       return studentRepository.findAll()
-               .parallelStream()
-               .map(s -> s.getName().toUpperCase())
-               .sorted()
-               .filter(s-> s.startsWith("А") || s.startsWith("A")) // Latin or Cyrillic A
-               .collect(Collectors.toList());
+        return studentRepository.findAll()
+                .parallelStream()
+                .map(s -> s.getName().toUpperCase())
+                .sorted()
+                .filter(s -> s.startsWith("А") || s.startsWith("A")) // Latin or Cyrillic A
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -127,5 +129,51 @@ public class StudentServiceImpl implements StudentService {
                 .parallelStream()
                 .mapToInt(s -> s.getAge())
                 .average().orElse(0.0);
+    }
+
+    @Override
+    public void printParallel() {
+        List<String> names = studentRepository.findAll().stream()
+                .map(s -> s.getName())
+                .collect(Collectors.toList());
+        if (names.size() >= 6) {
+            System.out.println(Thread.currentThread().getName() + " - " + names.get(0));
+            System.out.println(Thread.currentThread().getName() + " - " + names.get(1));
+
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + " - " + names.get(2));
+                System.out.println(Thread.currentThread().getName() + " - " + names.get(3));
+            }).start();
+
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + " - " + names.get(4));
+                System.out.println(Thread.currentThread().getName() + " - " + names.get(5));
+            }).start();
+        }
+    }
+
+    @Override
+    public void printSynchronized() {
+        List<String> names = studentRepository.findAll().stream()
+                .map(s -> s.getName())
+                .collect(Collectors.toList());
+        if (names.size() >= 6) {
+            System.out.println(Thread.currentThread().getName() + ", operation " + ++counter + " " + names.get(0));
+            System.out.println(Thread.currentThread().getName() + ", operation " + ++counter + " " + names.get(1));
+
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + ", operation " + getCounter() + " " + names.get(2));
+                System.out.println(Thread.currentThread().getName() + ", operation " + getCounter() + " " + names.get(3));
+            }).start();
+
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + ", operation " + getCounter() + " " + names.get(4));
+                System.out.println(Thread.currentThread().getName() + ", operation " + getCounter() + " " + names.get(5));
+            }).start();
+        }
+    }
+
+    private synchronized int getCounter() {
+        return ++counter;
     }
 }
